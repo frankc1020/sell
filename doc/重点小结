@@ -1,0 +1,116 @@
+1. 字符串比较和数字比较以及集合判空
+	字符串比较必须用equals
+	数字之间比较用 ==
+	数组集合判空用isEmpty()
+
+	数组判断：
+	   先判非空，在判集合大小
+
+2. 泛型继承的范围所规定的上限和下限
+
+    /**
+	 * 定义方法，可以同时遍历3个集合，遍历集合的同时可以调用工作方法work
+	 * ? 通配符，迭代器it.next()方法取出来的是Object类型，怎么调用work方法
+	 * 强制转换：it.next() = Object obj ==> Employee
+	 * 方法参数：控制，可以传递Employee对象，也可以传递Employee的子类对象
+	 * 泛型的限定  本案例的父类是固定的Employee，但是子类无限制
+	 *
+	 *  ArrayList<? extends Employee> 为泛型的限定
+	 *  ? 表示是Employee的子类 
+	 *  ? extends Employee 限制的是父类，上限限定，可以传递Employee，传递他的子类对象
+	 *  ? super Employee 限制的是子类，下限限定，可以传递Employee，传递他的父类对象
+	 */
+
+
+3. 继承和多态：
+   
+   继承：
+	   1、从大分类到小分类的过程
+	             继承      父类      子类
+	     
+	   2、子类对于父类，你有的我都有，你没有的我也有
+   
+   多态：
+	    1. 属性   当父类的属性可以共用时，子类可以直接调用父类的属性。      
+	    2.  对象创建：  当 左边是父类   右边创建子类时，调用父类和子类都有的方法时，
+                        依然调用子类的方法，同时也可以调用子类没有而父类有的方法(即调用自己的方法),但是无法调用子类特有的方法
+              
+           总结： 当创建的对象在接收的时候(即左边对象)为父类对象，那么只能调用父类存在的对象,父类和子类共有的对象
+                       
+                 当创建的对象在接收的时候(即左边对象)为子类对象 ，那么不只可以调用自己特有的方法，还能调用父类的方法，父类和子类共有的则按照子类方法走
+
+4. 对象默认初始值问题：
+    如果类使用装箱对象 那么类属性的初始值为null
+    如果使用基本类型， 那么类属性的初始值为0
+
+
+5. linux中grep 的使用
+
+    命令：grep
+	格式：grep [option] pattern filenames
+	功能：逐行搜索所指定的文件或标准输入，并显示匹配模式的每一行。
+	选项：-v 找出模式失配的行
+	-c 统计匹配行的数量
+	-n 显示匹配模式的每一行
+	注释：
+	例如：% ps -aux | grep R
+
+	在指定文件中搜索指定的内容  grep '指定的内容' filename
+	例： grep 'ServicePathJob' trade.2019-08-21.log 
+
+6.   InputStream 中的read()方法
+    从输入流读取数据的下一个字节，如果因为已经达到流末尾而没有可用的字节，则返回值-1.
+    在输入数据可用、检测到流末尾或者抛出异常前，此方法一直阻塞。
+
+7. JS中时间转换为下个月得指定日期
+    /**
+	 * 根据所给的日期时间，
+	 * 得到下个月得指定天数
+	 * @param date
+	 * @param days
+	 */
+	function addNextMonthAndDay(date,days){
+	    if (!isNaN(days)) {
+	        date = new Date(date)
+	        date.setMonth(date.getMonth() + 1);
+	        date.setDate(days)
+	        return date;
+	    }
+	}
+
+8.java后台工具类中时间的转换-----给一个固定的时间转换为下个月的指定日期
+
+      /**
+     * 指定日期为下个月得几号
+     *例如现在2019-10-14   指定天数8   则结果为2019-11-8
+     * @param date
+     * @return
+     */
+    public static Date addMonthAndDay(Date date, int days)
+    {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.MONTH, 1);
+        cal.set(Calendar.DATE, days);
+        Date newDate = cal.getTime();
+        return newDate;
+    }
+
+9. 分库分表中创建序列id
+    不能直接在参数库里面配置，需要直接在创建表的数据库中创建
+    CREATE SIMPLE SEQUENCE SEQ_TF_T_TRADE_GROUP_ID
+	START WITH 1000000000000000 INCREMENT BY 1 
+	MAXVALUE 9999999999999999 NOCYCLE;
+
+10. 使用SQL语句，将表中的一个字段中的一部分字符串作为条件查询
+    substr( string, start_position, [ length ] )；string：源字符串；start_position：提取的位置，字符串中第一个位置始终为1；[ length ]：提取的字符数，如果省略，substr将返回整个字符串；
+
+    例子： substr(a.exchange_type,1,1) = '1'
+
+
+
+
+
+
+
+
